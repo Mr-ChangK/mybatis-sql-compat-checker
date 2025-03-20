@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="demo.ifmapper">
+    <select id="findBooks">
+        SELECT * FROM books
+        <where>
+            <if test="id != null">
+                AND id = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="title != null">
+                AND title LIKE concat('%', #{title,jdbcType=VARCHAR}, '%')
+            </if>
+        </where>
+    </select>
+</mapper>

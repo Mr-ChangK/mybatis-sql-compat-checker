@@ -1,0 +1,17 @@
+# Maven output
+/target/
+
+# IDE files
+.idea/
+*.iml
+.project
+.classpath
+.settings/
+.vscode/
+.java-version
+
+# OS files
+.DS_Store
+
+# Logs
+*.log
