@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="demo.UserMapper">
+
+    <select id="findAll" resultType="map">
+        SELECT id, email, status, created_at
+        FROM users
+        ORDER BY id
+    </select>
+
+    <select id="findByStatus" parameterType="map" resultType="map">
+        SELECT id, email, status, created_at
+        FROM users
+        WHERE status = #{status, jdbcType=VARCHAR}
+          AND created_at >= #{since, jdbcType=TIMESTAMP}
+        ORDER BY created_at DESC
+    </select>
+
+    <insert id="insertUser" parameterType="map">
+        INSERT INTO users (email, status, created_at)
+        VALUES (#{email, jdbcType=VARCHAR},
+                #{status, jdbcType=VARCHAR},
+                #{createdAt, jdbcType=TIMESTAMP})
+    </insert>
+
+</mapper>

@@ -28,3 +28,31 @@ Key flags:
 - `-DvalidateSql.includes=**/*Mapper.xml` and `-DvalidateSql.excludes=**/legacy/**` for fine control.
 - `-DvalidateSql.reportPath=target/sql-valid-report.json` to relocate the report.
 - `-DvalidateSql.originJdbcUrl=...` (plus username/password) to validate origin DB first; target DB runs only if origin passes.
+
+Install to local repo:
+```
+mvn install
+```
+
+## Demo
+- First install the plugin to your local repository:
+  ```
+  mvn install
+  ```
+- Start the bundled Postgres:
+  ```
+  cd demo
+  docker-compose up -d
+  ```
+  (Exposes Postgres on `localhost:5433`, db/user/password `sqlcompat`.)
+- Run the plugin against the demo mapper:
+  ```
+  mvn io.github.chedwick:mybatis-sql-compat-checker:0.1.0-SNAPSHOT:validate-sql
+  # mapperDirectories already set in demo/pom.xml (src/main/resources/mappers); override if you move files
+  ```
+- View the report at `demo/target/sql-valid-report.json` (`entriesByDatabase` groups origin vs target).
+- Stop the demo:
+  ```
+  cd demo
+  docker-compose down
+  ```

@@ -1,5 +1,6 @@
 # Maven output
 /target/
+**/target/
 
 # IDE files
 .idea/

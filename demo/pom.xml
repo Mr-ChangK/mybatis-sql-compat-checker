@@ -1,0 +1,63 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>io.github.chedwick.demo</groupId>
+    <artifactId>mybatis-sql-compat-demo</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+    <name>mybatis-sql-compat-demo</name>
+
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <mybatis.version>3.5.15</mybatis.version>
+        <plugin.version>0.1.0-SNAPSHOT</plugin.version>
+        <!-- Origin database (source). Defaults to demo Postgres; override for your source DB. -->
+        <origin.url>jdbc:postgresql://localhost:5433/sqlcompat</origin.url>
+        <origin.user>sqlcompat</origin.user>
+        <origin.password>sqlcompat</origin.password>
+        <!-- Target database (destination). Defaults to demo Postgres; override for your target DB. -->
+        <target.url>jdbc:postgresql://localhost:5433/sqlcompat</target.url>
+        <target.user>sqlcompat</target.user>
+        <target.password>sqlcompat</target.password>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>${mybatis.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>io.github.chedwick</groupId>
+                <artifactId>mybatis-sql-compat-checker</artifactId>
+                <version>${plugin.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>validate-sql</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <!-- Target database -->
+                    <jdbcUrl>${target.url}</jdbcUrl>
+                    <username>${target.user}</username>
+                    <password>${target.password}</password>
+                    <!-- Origin database -->
+                    <originJdbcUrl>${origin.url}</originJdbcUrl>
+                    <originUsername>${origin.user}</originUsername>
+                    <originPassword>${origin.password}</originPassword>
+                    <mapperDirectories>src/main/resources/mappers</mapperDirectories>
+                    <executeStatements>false</executeStatements>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
